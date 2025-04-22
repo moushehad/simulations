@@ -1,0 +1,40 @@
+clear
+clc
+
+% this program allows the user to hard code a function and bounds
+% and finds the center of mass of a 2D object with the shape
+% formed by the signed area under a curve
+
+% uses calc 2 methods
+% does not use calc 3 methods
+
+% intervals
+start = -pi/2;
+stop = pi * (3/2);
+
+% f(x) = sinx + 1
+f = @(x) sin(x) + 1;
+
+% the area A = the definite integral of f from start to stop
+A = integral(f,start,stop);
+
+% find the paramentric equations for the COM 
+f_x = @(x) (1/A) .* x.* f(x);
+f_y = @(x) (1/(2*A)) .* f(x).^2;
+
+% integrate the functions
+x_pos = integral(f_x,start,stop);
+y_pos = integral(f_y,start,stop);
+
+% create the x and y for plotting
+x_vals = linspace(start,stop,100);
+y_vals = f(x_vals);
+
+% plot the function and its COM
+hold on
+plot(x_vals,y_vals)
+plot(x_pos,y_pos,'o')
+xlabel('x')
+ylabel('y')
+title('Center of Mass of a plain under a curve')
+grid on
